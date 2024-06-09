@@ -1,10 +1,51 @@
+@import url("https://fonts.googleapis.com/css?family=Fanwood%20Text:400|Inter:300");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 
+html,body{
+  cursor: none;
+} */
 @layer {
   :root {
     --header-row-height: 44px;
-    --header-height: calc(var(--header-row-height)*2);
+    --header-height: calc(var(--header-row-height) * 2);
+    --cursor-color: gray;
   }
 }
+
+body,
+p {
+  font-family: "Inter";
+  font-weight: 300;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Fanwood Text";
+  font-weight: 400;
+}
+
+/* html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+} */
