@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useMotionValue } from "framer-motion";
 import { useSpring } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
@@ -20,10 +21,23 @@ const Work = () => {
     </>
   );
 };
+
 const Table = () => {
   const [id, setId] = useState(null);
+  const [prevId, setPrevId] = useState(0); // Add state to track previous ID
+  const [topHover,setTopHover]=useState(null)
   const [hoverFirstCard, setHoverFirstCard] = useState(true);
-  console.log("🚀 ~ Table ~ id:", id);
+  console.log("🚀 ~ Table ~ id:", id, "prevId:", prevId); // Log both current and previous IDs
+  useEffect(() => {
+   if (id>prevId) {
+    setTopHover(true)
+   } else {
+    setTopHover(false)
+   }
+  }, [id,prevId])
+  
+
+
   const cardControl = useAnimationControls();
   const top = useMotionValue();
   const left = useMotionValue();
@@ -39,6 +53,7 @@ const Table = () => {
     "https://dennissnellenberg.com/media/pages/work/avvr/4d2a7758a4-1672918357/thumbnail-avvr-v2.jpg",
     "https://dennissnellenberg.com/media/pages/work/twice/0ab7e43954-1710404752/thumbnail-twice.jpg",
   ];
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       top.set(e.clientY);
@@ -50,6 +65,11 @@ const Table = () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  const handleSetId = (newId) => {
+    setPrevId(id); // Update prevId with the current id before setting the new id
+    setId(newId);
+  };
 
   return (
     <>
@@ -83,9 +103,9 @@ const Table = () => {
               return (
                 i === id && (
                   <motion.img
-                    initial={{ y: hoverFirstCard ? 0 : "100%" }}
+                    initial={{ y: topHover ? "100%" : "-100%" }}
                     animate={{ y: 0 }}
-                    exit={{ y: "-100%" }}
+                    exit={{ y: topHover ? "100%" :"-100%"}}
                     transition={{
                       duration: 0.4,
                       type: "tween",
@@ -94,7 +114,7 @@ const Table = () => {
                     // style={{ x: "-50%" }}
                     key={i}
                     src={curr}
-                    className="absolute  h-full w-full  object-cover object-center"
+                    className="absolute h-full w-full object-cover object-center"
                   />
                 )
               );
@@ -118,7 +138,7 @@ const Table = () => {
             services="interactive & development"
             location="spain"
             id={id}
-            setId={setId}
+            setId={handleSetId} // Use handleSetId instead of setId
           />
           <TableItem
             uniqueId={1}
@@ -128,7 +148,7 @@ const Table = () => {
             location="bali, indoneshia"
             id={id}
             setHoverFirstCard={setHoverFirstCard}
-            setId={setId}
+            setId={handleSetId} // Use handleSetId instead of setId
           />
           <TableItem
             uniqueId={2}
@@ -138,7 +158,7 @@ const Table = () => {
             location="London, UK"
             id={id}
             setHoverFirstCard={setHoverFirstCard}
-            setId={setId}
+            setId={handleSetId} // Use handleSetId instead of setId
           />
           <TableItem
             uniqueId={3}
@@ -147,7 +167,7 @@ const Table = () => {
             services="design & Developementt"
             location="Hongkong"
             id={id}
-            setId={setId}
+            setId={handleSetId} // Use handleSetId instead of setId
             setHoverFirstCard={setHoverFirstCard}
           />
           <TableItem
@@ -157,7 +177,7 @@ const Table = () => {
             services="design & Developementt"
             location="Hongkong"
             id={id}
-            setId={setId}
+            setId={handleSetId} // Use handleSetId instead of setId
             setHoverFirstCard={setHoverFirstCard}
           />
           <TableItem
@@ -167,7 +187,7 @@ const Table = () => {
             services="design & Developementt"
             location="Hongkong"
             id={id}
-            setId={setId}
+            setId={handleSetId} // Use handleSetId instead of setId
             setHoverFirstCard={setHoverFirstCard}
           />
         </motion.div>
@@ -241,6 +261,7 @@ const TableItem = ({
     </motion.ul>
   );
 };
+
 const TableHeading = () => (
   <ul className="uppercase grid grid-cols-4 py-12 gap-12 px- ">
     <li className="text-xs text-[rgb(28,_29,_32)]">Client</li>
@@ -249,11 +270,13 @@ const TableHeading = () => (
     <li className="text-xs text-[rgb(28,_29,_32)]">year</li>
   </ul>
 );
+
 const Heading = () => (
   <h1 className="[font-size:_clamp(45.5px,5vw+2rem,83.6646px)] leading-none text-balance font-semibold">
     Creating next level digital products
   </h1>
 );
+
 const Tabs = () => {
   return (
     <div className="flex justify-between items- mt-12">

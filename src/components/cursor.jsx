@@ -6,13 +6,22 @@ import { useEffect } from "react";
 export const Cursor = () => {
   const mousePositionX = useMotionValue(0);
   const mousePositionY = useMotionValue(0);
+
+  const mousePositionXView = useSpring(mousePositionX, {
+    stiffness: 600,
+    damping: 30,
+  });
+  const mousePositionYView = useSpring(mousePositionY, {
+    stiffness: 600,
+    damping: 30,
+  });
   const mousePositionXSpring = useSpring(mousePositionX, {
     stiffness: 500,
-    damping: 28,
+    damping: 30,
   });
   const mousePositionYSpring = useSpring(mousePositionY, {
     stiffness: 500,
-    damping: 28,
+    damping: 30,
   });
   const cursorControls = useAnimationControls();
   const [cursorText, setCursorText] = useState("");
@@ -30,8 +39,8 @@ export const Cursor = () => {
       // transition: { type: "tween", ease: "backOut", duration: 0.5 },
     },
     view: {
-      width: 60,
-      height: 60,
+      width: 80,
+      height: 80,
       backgroundColor: "rgb(241, 245, 249)",
       color: "#000",
       scale: 1,
@@ -111,23 +120,32 @@ export const Cursor = () => {
     };
   }, []);
   return (
-    <motion.div
-      id="cursor"
-      className="fixed rounded-full pointer-events-none z-[999999999]"
-      style={{
-        top: mousePositionXSpring,
-        left: mousePositionYSpring,
-        x: "-50%",
-        y: "-50%",
-      }}
-      animate={cursorControls}
-      initial="initial"
-      variants={cursorVarients}
-    >
-      <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">
+    <>
+      <motion.div
+        id="cursor"
+        className="fixed rounded-full pointer-events-none z-[99]"
+        style={{
+          top: mousePositionXSpring,
+          left: mousePositionYSpring,
+          x: "-50%",
+          y: "-50%",
+        }}
+        animate={cursorControls}
+        initial="initial"
+        variants={cursorVarients}
+      ></motion.div>
+      <motion.span
+        className="fixed inline-block  font-bold z-[100] pointer-events-none"
+        style={{
+          top: mousePositionXView,
+          left: mousePositionYView,
+          x: "-50%",
+          y: "-50%",
+        }}
+      >
         {cursorText}
-      </span>
-    </motion.div>
+      </motion.span>
+    </>
   );
 };
 

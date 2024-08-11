@@ -1,5 +1,11 @@
 // import Cursor from "./cursor";
-// import  Cursor  from "./components/cursor";
+import { useEffect } from "react";
+import Lenis from "lenis";
+import Vingea from "./components/vingea";
+import MaskCursor from "./components/maskCursor";
+import Menu from "./components/awwwardswiningmenu";
+import DragableSlider from "./components/dragableSlider";
+import Gallery from "./components/Gallery";
 // import TextAnimation from "./components/textanimation";
 // import ToggleButton from "./components/toggleButton";
 // import Marque from "./components/marque";
@@ -17,11 +23,24 @@
 // import AnimatePresenceComponent from "./components/animatePresence";
 // import HorizentalLine from "./components/horizentalline";
 
-import Work from "./components/work";
+// import Svganimations from "./components/svganimations";
+
+// import Work from "./components/work";
 
 // import AnimatedNavbar from "./components/AnimatedNavbar";
 
 const App = () => {
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  }, []);
+
   return (
     <>
       {/* <Marque /> */}
@@ -43,7 +62,17 @@ const App = () => {
       {/* <AnimatedNavbar /> */}
       {/* <Sidebar/> */}
       {/* <Pagetransition /> */}
-      <Work/>
+      {/* <Work/> */}
+      {/* <TorqueEdition/> */}
+      {/* <LayoutAnimation/> */}
+      {/* <Event/> */}
+      {/* <Vingea /> */}
+      {/* <MaskCursor /> */}
+      {/* <Menu/> */}
+      <DragableSlider />
+      {/* <Gallery/> */}
+      {/* <Svganimations/> */}
+      {/* <Marque3/> */}
       {/* <div className="h-screen w-screen bg-red-400"></div> */}
     </>
   );
